@@ -1,0 +1,22 @@
+form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+form button {
+  margin: 1.5vmin;
+  padding: 0.5vmin 1vmin;
+}
+
+form label {
+  background-color: #00000022;
+  border-radius: 0.5vmin;
+  margin: 1.5vmin;
+  padding: 0.5vmin;
+}
+
+form p {
+  margin: 0;
+  padding: 0;
+}
