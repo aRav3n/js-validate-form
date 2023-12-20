@@ -86,3 +86,17 @@ const checkPw = function validatePassword() {
   checkItemOnInput(pw, checkPw);
   checkItemOnInput(pwConfirm, checkPw);
 };
+
+const executeCheck = function executeChecksOnButtonPress() {
+  const buttonSubmit = document.querySelector("id", "submit");
+  buttonSubmit.addEventListener("click", () => {
+    checkEmail();
+    checkCountry();
+    checkZip();
+    checkPw();
+  });
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  executeCheck();
+});
