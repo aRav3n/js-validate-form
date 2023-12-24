@@ -17,6 +17,8 @@ const assignError = function assignErrorClass(errorItem, errorMessage) {
 const checkMissing = function checkIfInputIsFilledOut(item) {
   if (item.validity.valueMissing) {
     assignError(item, "This field needs to be filled out.");
+  } else {
+    removeError(item);
   }
 };
 
@@ -24,6 +26,8 @@ const checkLong = function verifyStringIsntTooLong(item, maxLength) {
   const errorMessage = `Must be less than ${maxLength} characters`;
   if (item.validity.tooLong) {
     assignError(item, errorMessage);
+  } else {
+    removeError(item);
   }
 };
 
@@ -31,12 +35,16 @@ const checkShort = function verifyStringIsntTooShort(item, minLength) {
   const errorMessage = `Must be at least ${minLength} characters`;
   if (item.validity.tooShort) {
     assignError(item, errorMessage);
+  } else {
+    removeError(item);
   }
 };
 
 const checkMismatch = function checkIfItemsDoNotMatch(itemOne, itemTwo) {
   if (itemOne === itemTwo) {
     return true;
+  } else {
+    removeError(item);
   }
   return false;
 };
@@ -63,28 +71,52 @@ const checkZip = function validateZipCode() {
 
 const checkPw = function validatePassword() {
   const pw = document.querySelector("#password");
-  const pwConfirm = document.querySelector("#passwordConfirm");
   checkMissing(pw);
-  checkMissing(pwConfirm);
   checkLong(pw, 20);
-  checkLong(pwConfirm, 20);
   checkShort(pw, 8);
-  checkShort(pwConfirm, 8);
+};
+
+const checkPwConf = function validatePasswordConfirmation() {
+  const pw = document.querySelector("#password");
+  const pwConfirm = document.querySelector("#passwordConfirm");
   if (checkMismatch(pw, pwConfirm)) {
     assignError(pwConfirm, "Needs to match the Password field.");
   }
+  checkMissing(pwConfirm);
+  checkLong(pwConfirm, 20);
+  checkShort(pwConfirm, 8);
+};
+
+const focusOutCheck = function checkFieldOnFocusOut(fieldId, checkFunction) {
+  const field = document.getElementById(fieldId);
+  field.addEventListener("focusout", () => {
+    checkFunction();
+  });
+};
+
+const checkAllFocusOut = function checkAllFieldsOnFocusOut() {
+  focusOutCheck("email", checkEmail);
+  focusOutCheck("country", checkCountry);
+  focusOutCheck("zip", checkZip);
+  focusOutCheck("password", checkPw);
+  focusOutCheck("passwordConfirm", checkPwConf);
 };
 
 const executeCheck = function executeChecksOnButtonPress() {
   const buttonSubmit = document.querySelector("#submitButton");
+  checkAllFocusOut();
   buttonSubmit.addEventListener("click", () => {
     checkEmail();
     checkCountry();
     checkZip();
     checkPw();
+    checkPwConf();
   });
 };
 
 window.addEventListener("DOMContentLoaded", () => {
+  const emailField = document.querySelector("#email");
+  emailField.focus();
+  emailField.select();
   executeCheck();
 });
