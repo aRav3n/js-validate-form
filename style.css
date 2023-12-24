@@ -1,3 +1,24 @@
+* {
+  font: inherit;
+}
+
+#congrats {
+  background-color: rgba(121, 233, 130, 0.667);
+  border-radius: 4rem;
+  display: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  justify-items: center;
+  padding: 2rem;
+}
+
+#congrats img {
+  height: auto;
+  width: auto;
+  max-height: 60vmin;
+  max-width: 60vmin;
+}
+
 .error {
   text-align: center;
   background-color: #ff3e3ec8;

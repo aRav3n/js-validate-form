@@ -82,6 +82,7 @@ const checkEmail = function validateEmailAddress() {
   const email = document.querySelector("#email");
   if (checkEmailLegit(email) && checkMissing(email)) {
     removeError(email);
+    return true;
   }
 };
 
@@ -89,6 +90,7 @@ const checkCountry = function validateCountry() {
   const country = document.querySelector("#country");
   if (checkMissing(country)) {
     removeError(country);
+    return true;
   }
 };
 
@@ -101,6 +103,7 @@ const checkZip = function validateZipCode() {
     checkNumber(zip)
   ) {
     removeError(zip);
+    return true;
   }
 };
 
@@ -108,6 +111,7 @@ const checkPw = function validatePassword() {
   const pw = document.querySelector("#password");
   if (checkLong(pw, 20) && checkShort(pw, 8) && checkMissing(pw)) {
     removeError(pw);
+    return true;
   }
 };
 
@@ -116,6 +120,7 @@ const checkPwConf = function validatePasswordConfirmation() {
   const pwConfirm = document.querySelector("#passwordConfirm");
   if (checkMismatch(pw, pwConfirm) && checkMissing(pwConfirm)) {
     removeError(pwConfirm);
+    return true;
   }
 };
 
@@ -134,15 +139,26 @@ const checkAllFocusOut = function checkAllFieldsOnFocusOut() {
   focusOutCheck("passwordConfirm", checkPwConf);
 };
 
+const displayCongrats = function displayCongratulationsHighFive() {
+  const congrats = document.querySelector("#congrats");
+  const form = document.querySelector("form");
+  form.style.display = "none";
+  congrats.style.display = "grid";
+};
+
 const executeCheck = function executeChecksOnButtonPress() {
   const buttonSubmit = document.querySelector("#submitButton");
   checkAllFocusOut();
   buttonSubmit.addEventListener("click", () => {
-    checkEmail();
-    checkCountry();
-    checkZip();
-    checkPw();
-    checkPwConf();
+    if (
+      checkEmail() &&
+      checkCountry() &&
+      checkZip() &&
+      checkPw() &&
+      checkPwConf()
+    ) {
+      displayCongrats();
+    }
   });
 };
 
