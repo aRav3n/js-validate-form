@@ -9,7 +9,7 @@ const removeError = function removeErrorClass(target) {
 };
 
 const assignError = function assignErrorClass(errorItem, errorMessage) {
-  const errorField = errorItem.parentElement.querySelector("p > span > span");
+  const errorField = errorItem.parentElement.querySelector("p > span + span");
   errorField.innerHTML = errorMessage;
   setError(errorField);
 };
@@ -41,39 +41,29 @@ const checkMismatch = function checkIfItemsDoNotMatch(itemOne, itemTwo) {
   return false;
 };
 
-const checkItemOnInput = function checkDesignatedItemWhenFieldIsModified(
-  item,
-  functionToExecute
-) {
-  item.addEventListener("input", functionToExecute());
-};
-
 const checkEmail = function validateEmailAddress() {
-  const email = document.querySelector("id", "email");
+  const email = document.querySelector("#email");
   checkMissing(email);
   if (email.validity.typeMismatch) {
     assignError(email, "Needs to be an email.");
   }
-  checkItemOnInput(email, checkEmail);
 };
 
 const checkCountry = function validateCountry() {
-  const country = document.querySelector("id", "country");
+  const country = document.querySelector("#country");
   checkMissing(country);
-  checkItemOnInput(country, checkCountry);
 };
 
 const checkZip = function validateZipCode() {
-  const zip = document.querySelector("id", "zip");
+  const zip = document.querySelector("#zip");
   checkMissing(zip);
   checkLong(zip, 5);
   checkShort(zip, 5);
-  checkItemOnInput(zip, checkZip);
 };
 
 const checkPw = function validatePassword() {
-  const pw = document.querySelector("id", "password");
-  const pwConfirm = document.querySelector("id", "passwordConfirm");
+  const pw = document.querySelector("#password");
+  const pwConfirm = document.querySelector("#passwordConfirm");
   checkMissing(pw);
   checkMissing(pwConfirm);
   checkLong(pw, 20);
@@ -83,12 +73,10 @@ const checkPw = function validatePassword() {
   if (checkMismatch(pw, pwConfirm)) {
     assignError(pwConfirm, "Needs to match the Password field.");
   }
-  checkItemOnInput(pw, checkPw);
-  checkItemOnInput(pwConfirm, checkPw);
 };
 
 const executeCheck = function executeChecksOnButtonPress() {
-  const buttonSubmit = document.querySelector("id", "submit");
+  const buttonSubmit = document.querySelector("#submitButton");
   buttonSubmit.addEventListener("click", () => {
     checkEmail();
     checkCountry();
